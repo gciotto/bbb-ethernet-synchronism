@@ -1,0 +1,133 @@
+/* OUTPUT PWM(mode7) 0x07 pulldown, 0x17 pullup, 0x?f no pullup/down */
+
+/dts-v1/;
+/plugin/;
+
+/{
+
+	compatible = "ti,beaglebone", "ti,beaglebone-black";
+	part-number = "pwm_P9_22";
+	version = "00A0";
+
+	fragment@0 {
+
+		target = <&am33xx_pinmux>;
+		__overlay__ {
+
+				/* P9_22 (ZCZ ball A17) */
+			    P9_22_default_pin: pinmux_P9_22_default_pin {
+				pinctrl-single,pins = <0x150  0x37>; };     /* Mode 7, Pull-Up, RxActive */
+			    P9_22_gpio_pin: pinmux_P9_22_gpio_pin {
+				pinctrl-single,pins = <0x150  0x2F>; };     /* Mode 7, RxActive */
+			    P9_22_gpio_pu_pin: pinmux_P9_22_gpio_pu_pin {
+				pinctrl-single,pins = <0x150  0x37>; };     /* Mode 7, Pull-Up, RxActive */
+			    P9_22_gpio_pd_pin: pinmux_P9_22_gpio_pd_pin {
+				pinctrl-single,pins = <0x150  0x27>; };     /* Mode 7, Pull-Down, RxActive */
+			    P9_22_spi_pin: pinmux_P9_22_spi_pin {
+				pinctrl-single,pins = <0x150  0x30>; };     /* Mode 0, Pull-Up, RxActive */
+			    P9_22_uart_pin: pinmux_P9_22_uart_pin {
+				pinctrl-single,pins = <0x150  0x31>; };     /* Mode 1, Pull-Up, RxActive */
+			    P9_22_i2c_pin: pinmux_P9_22_i2c_pin {
+				pinctrl-single,pins = <0x150  0x32>; };     /* Mode 2, Pull-Up, RxActive */
+			    P9_22_pwm_pin: pinmux_P9_22_pwm_pin {
+				pinctrl-single,pins = <0x150  0x33>; };     /* Mode 3, Pull-Up, RxActive */
+
+			};
+
+	};
+
+	fragment@1  {
+
+		target = <&ocp>;
+		__overlay__ {
+
+			P9_22_pinmux {
+				compatible = "bone-pinmux-helper";
+				status = "okay";
+				pinctrl-names = "default", "gpio", "gpio_pu", "gpio_pd", "spi", "uart", "i2c", "pwm";
+				pinctrl-0 = <&P9_22_default_pin>;
+				pinctrl-1 = <&P9_22_gpio_pin>;
+				pinctrl-2 = <&P9_22_gpio_pu_pin>;
+				pinctrl-3 = <&P9_22_gpio_pd_pin>;
+				pinctrl-4 = <&P9_22_spi_pin>;
+				pinctrl-5 = <&P9_22_uart_pin>;
+				pinctrl-6 = <&P9_22_i2c_pin>;
+				pinctrl-7 = <&P9_22_pwm_pin>;
+		    	};
+		};
+	};
+
+
+    /************************/
+    /* Timers / PWM         */
+    /************************/
+
+    fragment@20 {
+        target = <&epwmss0>;
+        __overlay__ {
+            status = "okay";
+        };
+    };
+
+    fragment@21 {
+        target = <&ehrpwm0>;
+        __overlay__ {
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <>; 
+        };
+    };
+
+    fragment@22 {
+        target = <&ecap0>;
+        __overlay__ {
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <>; 
+        };
+    };
+
+    fragment@23 {
+        target = <&epwmss1>;
+        __overlay__ {
+            status = "okay";
+        };
+    };
+
+    fragment@24 {
+        target = <&ehrpwm1>;
+        __overlay__ {
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <>; 
+        };
+    };
+
+    fragment@25 {
+        target = <&epwmss2>;
+        __overlay__ {
+            status = "okay";
+        };
+    };
+
+    fragment@26 {
+        target = <&ehrpwm2>;
+        __overlay__ {
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <>; 
+        };
+    };
+
+    fragment@27 {
+        target = <&ecap2>;
+        __overlay__ {
+            status = "okay";
+            pinctrl-names = "default";
+            pinctrl-0 = <>; 
+        };
+    };
+
+    /************************/
+
+};
